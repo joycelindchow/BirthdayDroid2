@@ -138,6 +138,13 @@ public class BirthDay {
         return new ArrayList<>();
     }
 
+    public Map<String, Integer> getChineseStats() {
+        if(permissions.checkPermissionPreferences(PermissionHelper.CONTACT_PERMISSION)) {
+            return statistics.getChineseStats();
+        }
+        return new TreeMap<>();
+    }
+
     public void postNotification(Contact contact) {
         if (permissions.checkPermissionPreferences(PermissionHelper.CONTACT_PERMISSION)) {
             try {
@@ -147,6 +154,7 @@ public class BirthDay {
                 StringBuilder body = new StringBuilder();
 
                 String eventTypeStr;
+                String relationshipStr;
 
                 switch (contact.getEventType()) {
                     default:
@@ -159,6 +167,7 @@ public class BirthDay {
                 }
 
                 eventTypeStr = eventTypeStr.toLowerCase();
+
 
                 if (contact.shallWeCelebrateToday()) {
                     if (contact.getAge() > 0) {
@@ -244,6 +253,7 @@ public class BirthDay {
 
                 if (!contact.failOnParseDateString()) {
                     String sign = contact.getSign();
+                    String chineseSign = contact.getChineseSign();
                     int age = contact.getAge();
                     int month = contact.getMonth();
                     int bWeek = contact.getBirthDayWeek();
@@ -275,6 +285,12 @@ public class BirthDay {
                         statistics.getWeekStats().put(bWeek, 1);
                     }
 
+                    if (statistics.getChineseStats().get(chineseSign) != null) {
+                        statistics.getChineseStats().put(chineseSign,
+                                statistics.getChineseStats().get(chineseSign) + 1);
+                    } else {
+                        statistics.getChineseStats().put(chineseSign, 1);
+                    }
                     contactList.add(contact);
                 } else {
                     statistics.getFailList().add(contact);

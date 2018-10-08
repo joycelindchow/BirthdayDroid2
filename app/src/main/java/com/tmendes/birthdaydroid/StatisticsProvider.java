@@ -27,6 +27,7 @@ class StatisticsProvider {
     private final Map<Integer, Integer> monthStats;
     private final Map<Integer, Integer> weekStats;
     private final ArrayList<Contact> failList;
+    private final Map<String, Integer> chineseStats;
 
     public StatisticsProvider() {
         ageStats = new TreeMap<>();
@@ -34,6 +35,7 @@ class StatisticsProvider {
         monthStats = new TreeMap<>();
         weekStats = new TreeMap<>();
         failList = new ArrayList<>();
+        chineseStats = new TreeMap<>();
     }
 
     public void reset() {
@@ -42,6 +44,7 @@ class StatisticsProvider {
         monthStats.clear();
         weekStats.clear();
         failList.clear();
+        chineseStats.clear();
     }
 
     public Map<Integer, Integer> getAgeStats() {
@@ -63,5 +66,7 @@ class StatisticsProvider {
     public ArrayList<Contact> getFailList() {
         return failList;
     }
+
+    public Map<String, Integer> getChineseStats() { return chineseStats; }
 
 }

@@ -23,7 +23,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -49,7 +48,6 @@ import com.tmendes.birthdaydroid.fragments.SettingsFragment;
 import com.tmendes.birthdaydroid.fragments.StatisticsFragment;
 import com.tmendes.birthdaydroid.helpers.PermissionHelper;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,6 +82,7 @@ public class MainActivity extends AppCompatActivity
 
         birthDays = new BirthDay(getApplicationContext(), permissionHelper);
 
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -102,6 +101,7 @@ public class MainActivity extends AppCompatActivity
 
         openContactFragments();
     }
+
 
     private void openContactFragments() {
         Fragment fragment;
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -152,7 +153,6 @@ public class MainActivity extends AppCompatActivity
                 fragmentClass = ContactListFragment.class;
                 break;
             case R.id.nav_statistics:
-
                 fragmentClass = StatisticsFragment.class;
                 break;
             case R.id.nav_settings:
@@ -160,6 +160,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_about:
                 fragmentClass = AboutUsFragment.class;
+                break;
+            case R.id.nav_add_manual:
+                Intent intent = new Intent(getApplicationContext(), AddManual.class);
+                startActivity(intent);
                 break;
         }
 
@@ -218,6 +222,10 @@ public class MainActivity extends AppCompatActivity
             openContactFragments();
         }
     }
+
+
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {

@@ -56,6 +56,7 @@ public class StatisticsFragment extends Fragment {
         Button buttonMonth = v.findViewById(R.id.buttonMonth);
         Button buttonWeek = v.findViewById(R.id.buttonWeek);
         Button buttonFailLog = v.findViewById(R.id.buttonFailLog);
+        Button buttonChineseSign = v.findViewById(R.id.buttonChineseSign);
 
         if (birthDay.getFailContactList().size() == 0) {
             buttonFailLog.setVisibility(View.INVISIBLE);
@@ -187,7 +188,31 @@ public class StatisticsFragment extends Fragment {
 
         });
 
-        return v;
+        buttonChineseSign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int size = birthDay.getBirthDayList().size();
+                Map<String, Integer> chineseStat = birthDay.getChineseStats();
+                StringBuilder dialogData = new StringBuilder(ctx.getResources()
+                        .getQuantityString(
+                                R.plurals.statistics_contacts_counter,
+                                size,
+                                size));
+                for(Object o: chineseStat.entrySet()) {
+                    Map.Entry pair = (Map.Entry) o;
+                    String chineseSign = (String) pair.getKey();
+                    int number = (int) pair.getValue();
+                    dialogData.append(ctx.getResources()
+                        .getQuantityString(
+                                R.plurals.statistics_int_string, number, number, chineseSign));
+            }
 
+            AlertDialog alertDialog = new AlertDialog.Builder(ctx).create();
+                alertDialog.setTitle(ctx.getResources().getString(R.string.statistics_chineseSign_title));
+                alertDialog.setMessage(dialogData.toString());
+                alertDialog.show();
+            }
+        });
+        return v;
     }
 }

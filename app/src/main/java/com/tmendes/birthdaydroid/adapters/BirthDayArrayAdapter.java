@@ -17,6 +17,7 @@
 
 package com.tmendes.birthdaydroid.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -37,9 +38,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tmendes.birthdaydroid.Contact;
 import com.tmendes.birthdaydroid.R;
 import com.tmendes.birthdaydroid.comparators.BirthDayComparator;
-import com.tmendes.birthdaydroid.Contact;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
         this.bdListToRestoreAfterFiltering = this.birthDayList;
     }
 
+    @SuppressLint({"StringFormatInvalid", "StringFormatMatches"})
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -84,6 +86,7 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
             int daysUntilBirthday = contact.getDaysUntilNextBirthDay().intValue();
             String zodiacSign = contact.getSign();
             String zodiacSignElement = contact.getSignElement();
+            String ChineseSign = contact.getChineseSign();
 
             int eventyType = contact.getEventType();
             String eventTypeStr;
@@ -102,6 +105,9 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) ctx
+
+
+
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = Objects.requireNonNull(inflater)
                         .inflate(R.layout.contact_list_item, parent, false);
@@ -121,6 +127,8 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
                 viewHolder.signElement = convertView.findViewById(R.id.tvSignAndElement);
 
                 viewHolder.bornOn = convertView.findViewById(R.id.tvBirthDay);
+
+                viewHolder.ChineseSign = convertView.findViewById(R.id.tvchineseSign);
 
                 viewHolder.picture =
                         convertView.findViewById(R.id.ivContactPicture);
@@ -152,6 +160,9 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
                             R.string.birthday_string, monthName, day)
             );
 
+            viewHolder.ChineseSign.setText(
+                    ctx.getResources().getString(R.string.chineseSign_string,ChineseSign,day)
+            );
 
             if (photoUri != null) {
                 try {
@@ -234,6 +245,7 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
         TextView daysToGo;
         TextView signElement;
         TextView bornOn;
+        TextView ChineseSign;
         ImageView picture;
         LinearLayout emojiParty;
         LinearLayout emojiPartyTomorrow;
@@ -260,7 +272,7 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
         return new Filter() {
 
             @Override
-            protected void publishResults(CharSequence constraint, Filter.FilterResults results) {
+            protected void publishResults(CharSequence constraint, FilterResults results) {
                 if (constraint.length() == 0) {
                     birthDayList = bdListToRestoreAfterFiltering;
                 } else {
@@ -279,7 +291,7 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
                     results.count = bdListToRestoreAfterFiltering.size();
                     results.values = bdListToRestoreAfterFiltering;
                 } else {
-                    String name, age, daysAge, birthdayWeekName, monthName, sign, signElement, constraintStr;
+                    String name, age, daysAge, birthdayWeekName, monthName, sign, signElement, constraintStr, ChineseSign;
                     constraintStr = constraint.toString().toLowerCase();
 
                     for (int i = 0; i < bdListToRestoreAfterFiltering.size(); i++) {
@@ -290,6 +302,7 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
                         signElement = bdListToRestoreAfterFiltering.get(i).getSignElement().toLowerCase();
                         age = Integer.toString(bdListToRestoreAfterFiltering.get(i).getAge());
                         daysAge = Integer.toString(bdListToRestoreAfterFiltering.get(i).getDaysAge());
+                        ChineseSign = bdListToRestoreAfterFiltering.get(i).getChineseSign().toLowerCase();
 
                         if (name.contains(constraintStr) ||
                                 age.startsWith(constraintStr) ||
@@ -297,7 +310,9 @@ public class BirthDayArrayAdapter extends ArrayAdapter<Contact> implements Filte
                                 monthName.contains(constraintStr) ||
                                 birthdayWeekName.contains(constraint) ||
                                 sign.contains(constraintStr) ||
-                                signElement.contains(constraintStr)) {
+                                signElement.contains(constraintStr) ||
+                                ChineseSign.contains(constraintStr));
+                        {
                             Contact contact = new Contact(ctx,
                                     bdListToRestoreAfterFiltering.get(i).getKey(),
                                     bdListToRestoreAfterFiltering.get(i).getName(),

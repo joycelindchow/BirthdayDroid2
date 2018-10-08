@@ -40,9 +40,11 @@ public class Contact {
     private final String key;
     private final String photoURI;
     private final String date;
+    private String ChineseSign;
 
     private int day;
     private int month;
+    private int year;
     private int age;
     private int daysAge;
 
@@ -83,6 +85,7 @@ public class Contact {
         if (!failOnParseDateString) {
             setContactBirthDayInfo();
             setContactSign();
+            setChineseSign();
         }
     }
 
@@ -129,10 +132,10 @@ public class Contact {
 
         day = bornOn.get(Calendar.DAY_OF_MONTH);
         month = bornOn.get(Calendar.MONTH);
+        year = bornOn.get(Calendar.YEAR);
 
         /* Age */
         if (containsYearInfo) {
-            int year = bornOn.get(Calendar.YEAR);
             if (year > actualYear) {
                 daysAge = 0;
                 age = 0;
@@ -288,6 +291,51 @@ public class Contact {
         }
     }
 
+    private void setChineseSign() {
+        if(ctx == null) {
+            return;
+        }
+
+        switch (year%12) {
+            case 0: ChineseSign = ctx.getResources().getString(R.string.chineseSign_monkey);
+            break;
+
+            case 1: ChineseSign = ctx.getResources().getString(R.string.chineseSign_rooster);
+            break;
+
+            case 2: ChineseSign = ctx.getResources().getString(R.string.chineseSign_dog);
+            break;
+
+            case 3: ChineseSign = ctx.getResources().getString(R.string.chineseSign_pig);
+            break;
+
+            case 4: ChineseSign = ctx.getResources().getString(R.string.chineseSign_rat);
+            break;
+
+            case 5: ChineseSign = ctx.getResources().getString(R.string.chineseSign_ox);
+            break;
+
+            case 6: ChineseSign = ctx.getResources().getString(R.string.chineseSign_tiger);
+            break;
+
+            case 7: ChineseSign = ctx.getResources().getString(R.string.chineseSign_rabbit);
+            break;
+
+            case 8: ChineseSign = ctx.getResources().getString(R.string.chineseSign_dragon);
+            break;
+
+            case 9: ChineseSign = ctx.getResources().getString(R.string.chineseSign_snake);
+            break;
+
+            case 10: ChineseSign = ctx.getResources().getString(R.string.chineseSign_horse);
+            break;
+
+            case 11: ChineseSign = ctx.getResources().getString(R.string.chineseSign_goat);
+            break;
+
+        }
+    }
+
     public String getMonthName() {
         DateFormatSymbols dfs = new DateFormatSymbols();
         return dfs.getMonths()[month];
@@ -300,7 +348,6 @@ public class Contact {
     public String getNextBirthDayWeekName() {
         DateFormatSymbols dfs = new DateFormatSymbols();
         return dfs.getWeekdays()[nextBirthday.get(Calendar.DAY_OF_WEEK)];
-
     }
 
     public String getName() {
@@ -319,6 +366,8 @@ public class Contact {
     public String getSignElement() {
         return signElement;
     }
+
+    public String getChineseSign() { return ChineseSign; }
 
     public String getKey() {
         return key;
