@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_cake_white_24dp"
             android:title="@string/menu_birthday_list" />
         <item
+            android:id="@+id/nav_add_manual"
+            android:icon="@drawable/ic_action_add_circle"
+            android:title="@string/menu_add_manual" />
+        <item
             android:id="@+id/nav_statistics"
             android:icon="@drawable/ic_poll_white_24dp"
             android:title="@string/menu_statistics" />

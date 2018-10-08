@@ -83,4 +83,7 @@ dependencies {
     api 'com.android.support:design:27.1.1'
     implementation 'org.sufficientlysecure:donations:2.6'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.google.firebase:firebase-firestore:11.8.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

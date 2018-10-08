@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "782573770704",
+    "firebase_url": "https://birthdaydroid.firebaseio.com",
+    "project_id": "birthdaydroid",
+    "storage_bucket": "birthdaydroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782573770704:android:f87d5fd46ac1f55b",
+        "android_client_info": {
+          "package_name": "com.tmendes.birthdaydroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782573770704-c7ms6hvbp718b96qc29ri0djvu8j209a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjJ9q8BQ6nitRo2oOsx_2XIDBx2qohTes"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
